@@ -4,7 +4,6 @@ import { getRoute } from "@utils/route";
 import { QueryFunctionContext } from "react-query";
 import { DefaultQueryKey } from "@interfaces/query";
 import { TerrariumModel } from "@models/terrarium";
-import { UserModel } from "@models/user";
 
 
     
@@ -16,15 +15,13 @@ import { UserModel } from "@models/user";
 pagination_limit?: number;
 terraria: {
         name?: string;
-created_user_id?: number;
 
       };
   };
 
   export type FilterTerrariumResponseBody = {
     total_pages: number;
-terraria: (TerrariumModel & { user: Omit<UserModel, 'encrypted_password' | 'email' | 'reset_password_token' | 'reset_password_sent_at' | 'remember_created_at' | 'current_sign_in_at' | 'last_sign_in_at' | 'current_sign_in_ip' | 'last_sign_in_ip' | 'sign_in_count' | 'password' | 'password_confirmation' | 'locked_at' | 'failed_attempts' | 'unlock_token' | 'confirmation_token' | 'unconfirmed_email' | 'confirmed_at' | 'confirmation_sent_at'>;
- })[];
+terraria: TerrariumModel[];
 message: any;
   };
 
@@ -50,8 +47,7 @@ message: any;
   };
 
   export type ShowTerrariumResponseBody = {
-    terrarium: TerrariumModel & { user: Omit<UserModel, 'encrypted_password' | 'email' | 'reset_password_token' | 'reset_password_sent_at' | 'remember_created_at' | 'current_sign_in_at' | 'last_sign_in_at' | 'current_sign_in_ip' | 'last_sign_in_ip' | 'sign_in_count' | 'password' | 'password_confirmation' | 'locked_at' | 'failed_attempts' | 'unlock_token' | 'confirmation_token' | 'unconfirmed_email' | 'confirmed_at' | 'confirmation_sent_at'>;
- };
+    terrarium: TerrariumModel;
 message: any;
   };
 
@@ -64,6 +60,84 @@ message: any;
         url: getRoute("/api/terrariums/:id", context.queryKey[3]),
         params: context.queryKey[3] || {},
         method: "GET",
+      });
+    };
+    
+
+    
+
+  export type CreateTerrariumRequestBody = {
+    terraria: {
+        name?: string;
+
+      };
+  };
+
+  export type CreateTerrariumResponseBody = {
+    terrarium: TerrariumModel;
+error_object: any;
+  };
+
+  
+    export const createTerrariumApi = async (
+      body: CreateTerrariumRequestBody
+    ): Promise<CreateTerrariumResponseBody> => {      
+      
+      return serviceFetch({
+        url: getRoute("/api/terrariums", body),
+        method: "POST",
+        data: body,
+      });
+    };
+    
+
+    
+
+  export type UpdateTerrariumRequestBody = {
+    id: string;
+terraria: {
+        name?: string;
+
+      };
+  };
+
+  export type UpdateTerrariumResponseBody = {
+    terrarium: TerrariumModel;
+error_object: any;
+  };
+
+  
+    export const updateTerrariumApi = async (
+      body: UpdateTerrariumRequestBody
+    ): Promise<UpdateTerrariumResponseBody> => {      
+      
+      return serviceFetch({
+        url: getRoute("/api/terrariums/:id", body),
+        method: "PUT",
+        data: body,
+      });
+    };
+    
+
+    
+
+  export type DeleteTerrariumRequestBody = {
+    id: string;
+  };
+
+  export type DeleteTerrariumResponseBody = {
+    message: any;
+  };
+
+  
+    export const deleteTerrariumApi = async (
+      body: DeleteTerrariumRequestBody
+    ): Promise<DeleteTerrariumResponseBody> => {      
+      
+      return serviceFetch({
+        url: getRoute("/api/terrariums/:id", body),
+        method: "DELETE",
+        data: body,
       });
     };
     
