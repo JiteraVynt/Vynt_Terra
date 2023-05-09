@@ -22,7 +22,7 @@ function Page404 (props: Page404Props): JSX.Element {
 <Row gutter={[30,28]} justify='center' align='top' className={styles.row_2} ><Text textType='Text' className={styles.text_13} >{'Page Not Found'}</Text></Row>
 <Row gutter={[30,30]} justify='center' align='top' className={styles.row_2} ><Text textType='Text' className={styles.text_13} >{'Description about page not found'}</Text></Row>
 <Row gutter={[30,30]} justify='center' align='top' className={styles.row_2} ><Button buttonType='primary' className={styles.button_0} >{'Redirect to home'}</Button></Row></div></div>
-<DefaultFooter className={styles.defaultheader_1} /></div>);
+<DefaultFooter className={styles.defaultheader_1} btn_prop={{}} onPress={{}} /></div>);
 }
 
 export default Page404;

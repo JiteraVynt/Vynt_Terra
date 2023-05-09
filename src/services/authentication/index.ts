@@ -2,7 +2,7 @@
 import { useMutation, MutateOptions } from "react-query";
 import { useSession } from "next-auth/react"
 
-import { resetPasswordRequest, resetPasswordVerify, EmailProviderSignupResponse, signupWithEmail, loginWithEmail, revokeTokenRequest, emailConfirmation, logout, SuccessResponse, TokenResponse } from "./requests";
+import { resetPasswordRequest, resetPasswordVerify, EmailProviderSignupResponse, signupWithEmail, emailConfirmation, loginWithEmail, revokeTokenRequest, logout, SuccessResponse, TokenResponse } from "./requests";
 
 
             
@@ -32,6 +32,15 @@ import { resetPasswordRequest, resetPasswordVerify, EmailProviderSignupResponse,
           > = {}
         ) => useMutation(signupWithEmail, options);
                           
+        export const useEmailConfirmation = (
+          options: MutateOptions<
+            unknown,
+            unknown,
+            unknown,
+            unknown
+          > = {}
+          ) => useMutation(emailConfirmation, options);
+                
         export const useLoginWithEmailMutation = (
           options: MutateOptions<
             unknown,
@@ -48,15 +57,6 @@ import { resetPasswordRequest, resetPasswordVerify, EmailProviderSignupResponse,
             unknown
           > = {}
         ) => useMutation(revokeTokenRequest, options);
-                
-        export const useEmailConfirmation = (
-          options: MutateOptions<
-            unknown,
-            unknown,
-            unknown,
-            unknown
-          > = {}
-          ) => useMutation(emailConfirmation, options);
             
 export const useLogoutMutation = (
   options: MutateOptions<unknown, unknown, unknown, unknown> = {}
