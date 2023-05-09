@@ -28,7 +28,7 @@ const navigation = useNavigateService()
   const handleForm1Button = async (values: Form1FormData) => {
   
         try {
-          await loginWithEmailMutation.mutateAsync({ table: 'users', email: values.input_email, password: undefined })
+          await loginWithEmailMutation.mutateAsync({ table: 'users', email: values.input_email, password: values.input_password })
           navigation.navigate('/')
         } catch (error: unknown) {
           
@@ -40,11 +40,11 @@ const navigation = useNavigateService()
 <div className={styles.card_7} ><form className={styles.form_1} ><div className={styles.input_4_container} ><div className={styles.input_4_inner} ><Text textType='Text' className={styles.input_4_label} >{'Email'}</Text>
 <Text textType='Text' className={styles.input_4_required} >{'*'}</Text></div>
 <ControlledInput placeholder={'Placeholder'} className={styles.input_email} control={formForm1.control} formField='input_email' inputStyle={{ backgroundColor: "rgb(255, 255, 255)", width: "100%", fontWeight: "500", border: "1px solid rgb(217, 217, 217)"}} />
-<div className={styles.input_4_error_message_container} ><Text textType='Text' className={styles.input_4_required} >{'Error Message'}</Text></div></div>
+<div className={styles.input_4_error_message_container} ><Text textType='Text' className={styles.input_4_required} >{undefined}</Text></div></div>
 <div className={styles.input_4_container} ><div className={styles.input_4_inner} ><Text textType='Text' className={styles.input_4_label} >{'Password'}</Text>
 <Text textType='Text' className={styles.input_4_required} >{'*'}</Text></div>
 <ControlledInput placeholder={'Placeholder'} isPasswordField className={styles.input_email} control={formForm1.control} formField='input_password' inputStyle={{ backgroundColor: "rgb(255, 255, 255)", width: "100%", fontWeight: "500", border: "1px solid rgb(217, 217, 217)"}} />
-<div className={styles.input_4_error_message_container} ><Text textType='Text' className={styles.input_4_required} >{'Error Message'}</Text></div></div>
+<div className={styles.input_4_error_message_container} ><Text textType='Text' className={styles.input_4_required} >{undefined}</Text></div></div>
 <Button buttonType='primary' className={styles.form_1_button} onClick={formForm1.handleSubmit(handleForm1Button)} >{'Login'}</Button></form></div></div></div>
 <DefaultFooter className={styles.defaultheader_1} btn_prop={{}} onPress={{}} /></div>);
 }
