@@ -94,7 +94,27 @@ email: string;
             }
           ); 
         };
-                                      
+                                
+        export type EmailConfirmationRequestBody = {
+          table: string;
+          confirmation_token: string;      
+        };
+    
+        export const emailConfirmation = async (body: EmailConfirmationRequestBody) => {
+          const result = (await signIn('confirmationToken', {
+            table: body.table,
+            confirmation_token: body.confirmation_token,
+            redirect: false
+          })) as unknown as NextAuthSignInResponse
+          if (!result || result.error) {
+            throw new Error(result?.error || 'Invalid result')
+          }
+          const info = authenticationSession.getAuthentication()
+          return { ...info }
+       }
+
+
+                            
         export type EmailProviderLoginRequestBody = {
           table: string;
           email: string;
@@ -128,26 +148,6 @@ email: string;
           redirect: false
         })
         };
-                      
-        export type EmailConfirmationRequestBody = {
-          table: string;
-          confirmation_token: string;      
-        };
-    
-        export const emailConfirmation = async (body: EmailConfirmationRequestBody) => {
-          const result = (await signIn('confirmationToken', {
-            table: body.table,
-            confirmation_token: body.confirmation_token,
-            redirect: false
-          })) as unknown as NextAuthSignInResponse
-          if (!result || result.error) {
-            throw new Error(result?.error || 'Invalid result')
-          }
-          const info = authenticationSession.getAuthentication()
-          return { ...info }
-       }
-
-
              
  
 

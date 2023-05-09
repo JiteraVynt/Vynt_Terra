@@ -1,8 +1,8 @@
 
-import { useQuery, UseQueryOptions, QueryClient } from "react-query";
+import { useQuery, UseQueryOptions, QueryClient, useMutation, MutateOptions, useQueryClient } from "react-query";
 import { DefaultQueryKey } from "@interfaces/query";
 import { DEFAULT_QUERY_OPTIONS } from "@constants/query";
-import { FilterTerrariumRequestBody, FilterTerrariumResponseBody, filterTerrariumApi, DefaultFilterTerrariumQueryKey, ShowTerrariumRequestBody, ShowTerrariumResponseBody, showTerrariumApi, DefaultShowTerrariumQueryKey } from "./request";
+import { FilterTerrariumRequestBody, FilterTerrariumResponseBody, filterTerrariumApi, DefaultFilterTerrariumQueryKey, ShowTerrariumRequestBody, ShowTerrariumResponseBody, showTerrariumApi, DefaultShowTerrariumQueryKey, CreateTerrariumRequestBody, CreateTerrariumResponseBody, createTerrariumApi, UpdateTerrariumRequestBody, UpdateTerrariumResponseBody, updateTerrariumApi, DeleteTerrariumRequestBody, DeleteTerrariumResponseBody, deleteTerrariumApi } from "./request";
 
 
 
@@ -62,6 +62,66 @@ import { FilterTerrariumRequestBody, FilterTerrariumResponseBody, filterTerrariu
       return queryClient.fetchQuery({
         queryKey: [...DefaultShowTerrariumQueryKey, params],
         queryFn: showTerrariumApi,
+      });
+    };
+  
+
+  
+    export const useCreateTerrariumMutation = (
+      options: MutateOptions<
+        CreateTerrariumResponseBody,
+        unknown,
+        CreateTerrariumRequestBody,        
+        unknown
+      > = {}
+    ) => {
+      const queryClient = useQueryClient();
+      return useMutation(createTerrariumApi, {
+        ...options,
+        onSuccess: (data, variables, context) => {
+          options.onSuccess && options.onSuccess(data, variables, context);
+          queryClient.invalidateQueries("Terrarium");
+        },
+      });
+    };
+  
+
+  
+    export const useUpdateTerrariumMutation = (
+      options: MutateOptions<
+        UpdateTerrariumResponseBody,
+        unknown,
+        UpdateTerrariumRequestBody,        
+        unknown
+      > = {}
+    ) => {
+      const queryClient = useQueryClient();
+      return useMutation(updateTerrariumApi, {
+        ...options,
+        onSuccess: (data, variables, context) => {
+          options.onSuccess && options.onSuccess(data, variables, context);
+          queryClient.invalidateQueries("Terrarium");
+        },
+      });
+    };
+  
+
+  
+    export const useDeleteTerrariumMutation = (
+      options: MutateOptions<
+        DeleteTerrariumResponseBody,
+        unknown,
+        DeleteTerrariumRequestBody,        
+        unknown
+      > = {}
+    ) => {
+      const queryClient = useQueryClient();
+      return useMutation(deleteTerrariumApi, {
+        ...options,
+        onSuccess: (data, variables, context) => {
+          options.onSuccess && options.onSuccess(data, variables, context);
+          queryClient.invalidateQueries("Terrarium");
+        },
       });
     };
   

@@ -1,36 +1,25 @@
 .page_container {
   flex-direction: column;
   background-color: rgb(248, 248, 248);
-  align-items: flex-start;
   position: relative;
   width: 1440px;
   top: calc(50% - 800px/2);
-  left: calc(50% - 1440px/2);
-  justify-content: flex-start;
   height: 800px;
+  left: calc(50% - 1440px/2);
   display: flex;
 }
-.background_1 {
-  flex: none;
-  flex-grow: 0;
-  position: absolute;
-  width: 1440px;
-  top: 0;
-  left: 0;
-  height: 800px;
+.defaultheader_1 {
+  width: 100%;
 }
 .container_7 {
   flex-direction: column;
-  flex: none;
+  flex: 1;
   flex-grow: 0;
-  position: absolute;
-  gap: 40;
-  top: 0;
-  left: 0;
-  height: 800px;
   align-items: center;
   width: 1440px;
+  gap: 40;
   justify-content: flex-start;
+  height: 800px;
   display: flex;
   padding: 140px 0px 140px 0px;
 }
@@ -75,51 +64,43 @@
   display: flex;
   padding: 32px 20px 32px 20px;
 }
-.text_6 {
-  font-size: 22px;
-  flex: none;
-  flex-grow: 0;
-  color: rgb(15, 15, 15);
-  line-height: 100%;
-  font-family: Noto Sans JP;
-  position: relative;
-  align-self: stretch;
-  text-align: left;
-  vertical-align: middle;
-  font-weight: 900;
-}
-.login_form_7 {
-  flex: none;
-  flex-direction: column;
-  flex-grow: 0;
-  align-items: flex-start;
-  position: relative;
-  gap: 12;
-  width: 460px;
-  align-self: stretch;
-  justify-content: flex-start;
+.form_1 {
+  max-width: 600px;
   height: 248px;
-  display: flex;
+  margin: 0px auto 48px auto;
+  padding: 0px 26px 42px 26px;
 }
-.email {
-  flex-direction: column;
-  flex: none;
-  flex-grow: 0;
-  align-items: flex-start;
-  position: relative;
-  width: 460px;
-  gap: 8;
-  justify-content: flex-start;
-  height: 84px;
-  display: flex;
+.input_4_container {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  margin: 0px 0px 24px 0px;
 }
-.button_1 {
-  font-size: 16px;
-  border-radius: 2px;
-  width: 300px;
-  text-align: center;
-  height: 56px;
-  font-weight: 500;
-  display: inline-block;
-  padding: 16px 16px 16px 16px;
+.input_4_inner {
+  background-color: rgba(0, 0, 0, 0);
+  width: 100%;
+  margin: 10px 0px 10px 0px;
+}
+.input_4_label {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  display: inline;
+  margin: 0px 10px 0px 0px;
+}
+.input_4_required {
+  color: rgb(255, 0, 0);
+  font-weight: bold;
+  display: inline;
+}
+.input_email {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0);
+}
+.input_4_error_message_container {
+  background-color: rgba(0, 0, 0, 0);
+  width: 100%;
+  margin: 10px 0px 0px 0px;
+}
+.form_1_button {
+  width: 100%;
+  margin: 20px 0px 0px 0px;
 }
