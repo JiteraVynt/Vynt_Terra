@@ -1,11 +1,7 @@
-import DashboardButton from '@components/molecules/DashboardButton';
-import {
-  FilterTerrariumResponseBody,
-  useFilterTerrariumQuery,
-  FilterTerrariumRequestBody,
-} from '@services/terrarium';
+import { FilterUserResponseBody, useFilterUserQuery, FilterUserRequestBody } from '@services/user';
 import React, { useMemo, useState } from 'react';
 import { TableColumnDefinition, Table } from '@components/atoms/Table';
+import DashboardButton from '@components/molecules/DashboardButton';
 import DashboardNavbar from '@components/molecules/DashboardNavbar';
 import { Row } from '@components/atoms/Row';
 import { Col } from '@components/atoms/Col';
@@ -18,18 +14,23 @@ import { DefaultPageProps } from '@interfaces/page';
 
 import styles from './index.module.css';
 
-type DashboardTerrariumsProps = DefaultPageProps & {
+type DashboardUsersProps = DefaultPageProps & {
   className?: string;
 };
 
-function DashboardTerrariums(props: DashboardTerrariumsProps): JSX.Element {
-  const [filterTerrariumParams, setFilterTerrariumParams] = useState<
-    Partial<FilterTerrariumRequestBody>
-  >({});
-  const filterTerrariumQuery = useFilterTerrariumQuery(filterTerrariumParams);
-  const actionsTable1 = useMemo<
-    TableColumnDefinition<FilterTerrariumResponseBody['terrariums'][number]>[]
-  >(
+function DashboardUsers(props: DashboardUsersProps): JSX.Element {
+  const [filterUserParams, setFilterUserParams] = useState<Partial<FilterUserRequestBody>>({});
+  const filterUserQuery = useFilterUserQuery(filterUserParams);
+  const columnsTable1 = useMemo<TableColumnDefinition<FilterUserResponseBody['users'][number]>[]>(
+    () => [
+      { name: 'Id', path: 'id', sortable: false },
+      { name: 'Created At', path: 'created_at', sortable: false },
+      { name: 'Updated At', path: 'updated_at', sortable: false },
+      { name: 'Email', path: 'email', sortable: false },
+    ],
+    [],
+  );
+  const actionsTable1 = useMemo<TableColumnDefinition<FilterUserResponseBody['users'][number]>[]>(
     () => [
       {
         name: 'Delete',
@@ -72,17 +73,17 @@ function DashboardTerrariums(props: DashboardTerrariumsProps): JSX.Element {
               <div className={styles.dashboard_content}>
                 <div className={styles.dashboard_content_title}>
                   <Text textType="Text" className={styles.text_9}>
-                    {'Terrariums'}
+                    {'Users'}
                   </Text>
                 </div>
                 <div className={styles.dashboard_content_filter_table}>
                   <div className={styles.box_8}>
                     <Table
-                      data={filterTerrariumQuery.data?.terraria}
+                      data={filterUserQuery.data?.users}
                       isHeaderVisible
                       isFooterVisible={false}
                       className={styles.table_1}
-                      columns={[]}
+                      columns={columnsTable1}
                       actions={actionsTable1}
                       wrapperStyle={{
                         width: '100%',
@@ -136,4 +137,4 @@ function DashboardTerrariums(props: DashboardTerrariumsProps): JSX.Element {
   );
 }
 
-export default DashboardTerrariums;
+export default DashboardUsers;

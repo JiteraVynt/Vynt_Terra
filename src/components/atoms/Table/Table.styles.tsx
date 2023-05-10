@@ -1,11 +1,11 @@
-import styled, { CSSObject } from 'styled-components'
+import styled, { CSSObject } from 'styled-components';
 
 export const StyledTableWrapper = styled.div<{ customStyle?: CSSObject }>`
   && {
     width: fit-content;
     ${(props) => props.customStyle}
   }
-`
+`;
 
 export const StyledTableResizer = styled.div<{ isResizing: boolean }>`
   position: absolute;
@@ -18,25 +18,25 @@ export const StyledTableResizer = styled.div<{ isResizing: boolean }>`
   cursor: col-resize;
   user-select: none;
   touch-action: none;
-`
+`;
 
 export const StyledTable = styled.table<{ customStyle?: CSSObject }>`
   border-collapse: collapse;
   width: fit-content;
   ${(props) => props.customStyle}
-`
+`;
 
 export const StyledTHead = styled.thead<{ customStyle?: CSSObject }>`
   ${(props) => props.customStyle}
-`
+`;
 
 export const StyledTBody = styled.tbody<{ customStyle?: CSSObject }>`
   ${(props) => props.customStyle}
-`
+`;
 
 export const StyledTFoot = styled.tfoot<{ customStyle?: CSSObject }>`
   ${(props) => props.customStyle}
-`
+`;
 
 export const StyledTr = styled.tr<{ customStyle?: CSSObject }>`
   width: fit-content;
@@ -49,7 +49,7 @@ export const StyledTr = styled.tr<{ customStyle?: CSSObject }>`
   .j-table__tbody-td.j-table__tbody-td--drag {
     cursor: row-resize;
   }
-`
+`;
 
 export const StyledTh = styled.th<{ canSort?: boolean; customStyle?: CSSObject }>`
   cursor: ${(props) => (props.canSort ? 'pointer' : null)};
@@ -67,20 +67,20 @@ export const StyledTh = styled.th<{ canSort?: boolean; customStyle?: CSSObject }
   &:hover .j-table__resizer {
     opacity: 1;
   }
-`
+`;
 
 export const StyledTd = styled.td<{ isSortColumn?: boolean; customStyle?: CSSObject }>`
   ${(props) => (props.isSortColumn ? { textAlign: 'center' } : undefined)}
   ${(props) => props.customStyle}
-`
+`;
 
-export type PaginationPositionType = 'left' | 'center' | 'right'
+export type PaginationPositionType = 'left' | 'center' | 'right';
 
 export const StyledPaginationWrapper = styled.div<{
-  paginationPosition: PaginationPositionType
-  customStyle?: CSSObject
+  paginationPosition: PaginationPositionType;
+  customStyle?: CSSObject;
 }>`
   display: flex;
   justify-content: ${(props) => props.paginationPosition};
   ${(props) => props.customStyle}
-`
+`;

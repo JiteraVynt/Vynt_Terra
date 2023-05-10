@@ -1,7 +1,7 @@
 interface LogEvent {
-  action: string
+  action: string;
 }
 
 export const log = ({ action }: LogEvent) => {
-  window.gtag('event', action)
-}
+  window.gtag('event', action);
+};

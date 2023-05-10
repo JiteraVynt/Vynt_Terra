@@ -8,17 +8,16 @@ interface OwnProps<Type extends FieldValues> extends Omit<Props, 'onChange' | 'v
   formField: Path<FieldValue<Type>>;
 }
 
-export const ControlledInput = <T extends FieldValues>({ formField, control, ...props }: OwnProps<T>) => {
+export const ControlledInput = <T extends FieldValues>({
+  formField,
+  control,
+  ...props
+}: OwnProps<T>) => {
   return (
     <Controller
       control={control}
       name={formField}
-      render={({ field }) => (
-        <Input          {...props}
-          value={field.value}
-          onChange={field.onChange}
-        />
-      )}
+      render={({ field }) => <Input {...props} value={field.value} onChange={field.onChange} />}
     />
   );
 };
