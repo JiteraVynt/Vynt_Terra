@@ -21,10 +21,10 @@ const Button = (props: ButtonProps) => {
 
   const component = useMemo(() => {
     if (typeof children === 'string') {
-      return (<Text>{children}</Text>);
+      return <Text>{children}</Text>;
     }
-    return (children);
-  }, [children])
+    return children;
+  }, [children]);
 
   return (
     <AntButton type={buttonType} icon={buttonIcon} {...rest} className={className}>

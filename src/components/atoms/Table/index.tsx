@@ -1,5 +1,5 @@
-import React, { CSSProperties, useEffect, useMemo, useState } from 'react'
-import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
+import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import {
   CellContext,
   ColumnDef,
@@ -9,10 +9,10 @@ import {
   PaginationState,
   Row,
   RowData,
-  SortingState
-} from '@tanstack/table-core'
-import { CSSObject } from 'styled-components'
-import { Pagination, PaginationProps } from 'antd'
+  SortingState,
+} from '@tanstack/table-core';
+import { CSSObject } from 'styled-components';
+import { Pagination, PaginationProps } from 'antd';
 import {
   closestCenter,
   DndContext,
@@ -23,26 +23,26 @@ import {
   DndContextProps,
   MouseSensor,
   TouchSensor,
-  DragEndEvent
-} from '@dnd-kit/core'
+  DragEndEvent,
+} from '@dnd-kit/core';
 import {
   horizontalListSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
-  verticalListSortingStrategy
-} from '@dnd-kit/sortable'
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import {
   restrictToFirstScrollableAncestor,
   restrictToHorizontalAxis,
   restrictToParentElement,
-  restrictToVerticalAxis
-} from '@dnd-kit/modifiers'
-import { CSS } from '@dnd-kit/utilities'
-export { createColumnHelper } from '@tanstack/react-table'
-export { arrayMove } from '@dnd-kit/sortable'
+  restrictToVerticalAxis,
+} from '@dnd-kit/modifiers';
+import { CSS } from '@dnd-kit/utilities';
+export { createColumnHelper } from '@tanstack/react-table';
+export { arrayMove } from '@dnd-kit/sortable';
 
-import { Icon, IconProps } from '@components/atoms/Icon'
+import { Icon, IconProps } from '@components/atoms/Icon';
 import {
   StyledTable,
   StyledTableWrapper,
@@ -54,74 +54,74 @@ import {
   PaginationPositionType,
   StyledTHead,
   StyledTBody,
-  StyledTFoot
-} from './Table.styles'
+  StyledTFoot,
+} from './Table.styles';
 
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ColumnMeta<TData extends RowData, TValue> {
-    action: boolean
+    action: boolean;
   }
 }
 
 export interface TableColumnDefinition<DataModel extends RowData> {
-  name: string
-  path?: DeepKeys<DataModel>
-  renderColumn?: ColumnDefTemplate<CellContext<DataModel, any>> | undefined
-  sortable?: boolean
-  filterable?: boolean
+  name: string;
+  path?: DeepKeys<DataModel>;
+  renderColumn?: ColumnDefTemplate<CellContext<DataModel, any>> | undefined;
+  sortable?: boolean;
+  filterable?: boolean;
 }
 
 export interface TableProps<DataModel extends RowData> {
-  className?: string
-  data?: DataModel[]
-  columns: TableColumnDefinition<DataModel>[]
-  actions?: TableColumnDefinition<DataModel>[]
+  className?: string;
+  data?: DataModel[];
+  columns: TableColumnDefinition<DataModel>[];
+  actions?: TableColumnDefinition<DataModel>[];
 
-  wrapperStyle?: CSSObject
-  tableStyle?: CSSObject
+  wrapperStyle?: CSSObject;
+  tableStyle?: CSSObject;
 
-  headerStyle?: CSSObject
-  headerRowStyle?: CSSObject
-  headerColumnStyle?: CSSObject
+  headerStyle?: CSSObject;
+  headerRowStyle?: CSSObject;
+  headerColumnStyle?: CSSObject;
 
-  bodyStyle?: CSSObject
-  bodyRowStyle?: CSSObject
-  bodyColumnStyle?: CSSObject
+  bodyStyle?: CSSObject;
+  bodyRowStyle?: CSSObject;
+  bodyColumnStyle?: CSSObject;
 
-  sortColumnStyle?: CSSObject
+  sortColumnStyle?: CSSObject;
 
-  footerStyle?: CSSObject
-  footerRowStyle?: CSSObject
-  footerColumnStyle?: CSSObject
+  footerStyle?: CSSObject;
+  footerRowStyle?: CSSObject;
+  footerColumnStyle?: CSSObject;
 
-  paginationWrapperStyle?: CSSObject
+  paginationWrapperStyle?: CSSObject;
 
-  isColumnResizeable?: boolean
-  isHeaderVisible?: boolean
-  isFooterVisible?: boolean
+  isColumnResizeable?: boolean;
+  isHeaderVisible?: boolean;
+  isFooterVisible?: boolean;
 
-  isColumnSortable?: boolean
-  onColumnSortingChange?: (currentIndex: number, newIndex: number, event: DragEndEvent) => void
+  isColumnSortable?: boolean;
+  onColumnSortingChange?: (currentIndex: number, newIndex: number, event: DragEndEvent) => void;
 
-  isRowSortable?: boolean
-  onRowSortingChange?: (currentIndex: number, newIndex: number, event: DragEndEvent) => void
+  isRowSortable?: boolean;
+  onRowSortingChange?: (currentIndex: number, newIndex: number, event: DragEndEvent) => void;
 
-  isDataSortable?: boolean
-  ascendingIconProps?: IconProps
-  descendingIconProps?: IconProps
-  onDataSortingChange?: (sortBy: string, sort: string) => void
+  isDataSortable?: boolean;
+  ascendingIconProps?: IconProps;
+  descendingIconProps?: IconProps;
+  onDataSortingChange?: (sortBy: string, sort: string) => void;
 
-  isPaginationEnabled?: boolean
-  paginationPosition?: PaginationPositionType
-  pageSize?: number
-  totalPage?: number
+  isPaginationEnabled?: boolean;
+  paginationPosition?: PaginationPositionType;
+  pageSize?: number;
+  totalPage?: number;
   paginationProps?: Omit<
     PaginationProps,
     'current' | 'total' | 'pageSize' | 'defaultPageSize' | 'onChange' | 'style'
-  >
-  paginationStyle?: PaginationProps['style']
-  onPaginationChange?: (pageIndex: number, pageSize: number) => void
+  >;
+  paginationStyle?: PaginationProps['style'];
+  onPaginationChange?: (pageIndex: number, pageSize: number) => void;
 }
 
 export interface TableRowProps<DataModel extends RowData>
@@ -129,7 +129,7 @@ export interface TableRowProps<DataModel extends RowData>
     TableProps<DataModel>,
     'isRowSortable' | 'isColumnResizeable' | 'bodyRowStyle' | 'bodyColumnStyle' | 'sortColumnStyle'
   > {
-  row: Row<DataModel>
+  row: Row<DataModel>;
 }
 
 export interface TableHeaderProps<DataModel extends RowData>
@@ -142,14 +142,14 @@ export interface TableHeaderProps<DataModel extends RowData>
     | 'descendingIconProps'
     | 'headerColumnStyle'
   > {
-  header: Header<DataModel, unknown>
+  header: Header<DataModel, unknown>;
 }
 
 export const DEFAULT_TABLE_BORDER_STYLES = {
   borderWidth: '1px',
   borderColor: '#000',
-  borderStyle: 'solid'
-}
+  borderStyle: 'solid',
+};
 
 const TableHeader = <DataModel,>({
   header,
@@ -158,26 +158,26 @@ const TableHeader = <DataModel,>({
   isDataSortable,
   ascendingIconProps,
   descendingIconProps,
-  headerColumnStyle
+  headerColumnStyle,
 }: // eslint-disable-next-line sonarjs/cognitive-complexity
 TableHeaderProps<DataModel>) => {
   const { attributes, listeners, transform, isDragging, setNodeRef } = useSortable({
-    id: header.id
-  })
+    id: header.id,
+  });
   const style: CSSProperties = {
     transform: CSS.Transform.toString({
       x: transform?.x || 0,
       y: transform?.y || 0,
       scaleX: 1,
-      scaleY: 1
-    })
-  }
+      scaleY: 1,
+    }),
+  };
   const isColumnSortableInternal = useMemo(
     () => isColumnSortable && !header.column.columnDef.meta?.action,
-    [header.column.columnDef.meta?.action, isColumnSortable]
-  )
-  const activeListeners = isColumnSortableInternal ? listeners : undefined
-  const activeAttributes = isColumnSortableInternal ? attributes : undefined
+    [header.column.columnDef.meta?.action, isColumnSortable],
+  );
+  const activeListeners = isColumnSortableInternal ? listeners : undefined;
+  const activeAttributes = isColumnSortableInternal ? attributes : undefined;
   return (
     <StyledTh
       ref={setNodeRef}
@@ -190,7 +190,7 @@ TableHeaderProps<DataModel>) => {
       customStyle={{
         ...headerColumnStyle,
         ...style,
-        width: isColumnResizeable ? header.getSize() : headerColumnStyle?.width
+        width: isColumnResizeable ? header.getSize() : headerColumnStyle?.width,
       }}
       onClick={isDataSortable ? header.column.getToggleSortingHandler() : undefined}
       onMouseDown={isColumnResizeable ? header.getResizeHandler() : undefined}
@@ -205,7 +205,7 @@ TableHeaderProps<DataModel>) => {
       {isDataSortable
         ? {
             asc: ascendingIconProps ? <Icon {...ascendingIconProps} /> : ' 🔼',
-            desc: descendingIconProps ? <Icon {...descendingIconProps} /> : ' 🔽'
+            desc: descendingIconProps ? <Icon {...descendingIconProps} /> : ' 🔽',
           }[header.column.getIsSorted() as string] ?? null
         : undefined}
       {isColumnResizeable ? (
@@ -217,8 +217,8 @@ TableHeaderProps<DataModel>) => {
         />
       ) : undefined}
     </StyledTh>
-  )
-}
+  );
+};
 
 const TableRow = <DataModel,>({
   row,
@@ -226,19 +226,19 @@ const TableRow = <DataModel,>({
   isColumnResizeable,
   bodyRowStyle,
   bodyColumnStyle,
-  sortColumnStyle
+  sortColumnStyle,
 }: TableRowProps<DataModel>) => {
   const { attributes, listeners, transform, isDragging, setNodeRef } = useSortable({
-    id: row.id
-  })
+    id: row.id,
+  });
   const style: CSSProperties = {
     transform: CSS.Transform.toString({
       x: transform?.x || 0,
       y: transform?.y || 0,
       scaleX: 1,
-      scaleY: 1
-    })
-  }
+      scaleY: 1,
+    }),
+  };
   return (
     <StyledTr
       ref={setNodeRef}
@@ -265,15 +265,15 @@ const TableRow = <DataModel,>({
           className={`j-table__tbody-td j-table__tbody-td--${cell.id}`}
           customStyle={{
             ...bodyColumnStyle,
-            width: isColumnResizeable ? cell.column.getSize() : bodyColumnStyle?.width
+            width: isColumnResizeable ? cell.column.getSize() : bodyColumnStyle?.width,
           }}
         >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </StyledTd>
       ))}
     </StyledTr>
-  )
-}
+  );
+};
 
 const TableInner = <DataModel,>(
   {
@@ -322,17 +322,17 @@ const TableInner = <DataModel,>(
     totalPage,
     paginationProps,
     paginationStyle,
-    onPaginationChange
+    onPaginationChange,
   }: TableProps<DataModel>,
-  ref: React.ForwardedRef<HTMLDivElement>
+  ref: React.ForwardedRef<HTMLDivElement>,
   // eslint-disable-next-line sonarjs/cognitive-complexity
 ) => {
-  const internalData = useMemo(() => data, [data])
-  const [sorting, setSorting] = useState<SortingState>([])
+  const internalData = useMemo(() => data, [data]);
+  const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: pageSize || 20
-  })
+    pageSize: pageSize || 20,
+  });
   const formattedColumns = useMemo<ColumnDef<DataModel, any>[]>(
     () =>
       columns.map((column) => ({
@@ -340,28 +340,28 @@ const TableInner = <DataModel,>(
         header: column.name,
         footer: column.name,
         cell: column.renderColumn ? column.renderColumn : (info: any) => info.getValue() || '',
-        enableSorting: column.sortable
+        enableSorting: column.sortable,
       })),
-    [columns]
-  )
+    [columns],
+  );
   const formattedActions = useMemo<ColumnDef<DataModel, any>[]>(
     () =>
       actions.map((action, index) => ({
         id: String(index),
         meta: {
-          action: true
+          action: true,
         },
         header: action.name,
         footer: action.name,
         cell: action.renderColumn ? action.renderColumn : (info: any) => info.getValue() || '',
-        enableSorting: false
+        enableSorting: false,
       })),
-    [actions]
-  )
+    [actions],
+  );
   const internalColumns = useMemo(
     () => [...formattedColumns, ...formattedActions],
-    [formattedColumns, formattedActions]
-  )
+    [formattedColumns, formattedActions],
+  );
   const table = useReactTable({
     data: internalData,
     columns: internalColumns,
@@ -369,67 +369,67 @@ const TableInner = <DataModel,>(
     pageCount: isPaginationEnabled ? totalPage : undefined,
     state: {
       sorting: isDataSortable ? sorting : undefined,
-      pagination: isPaginationEnabled ? pagination : undefined
+      pagination: isPaginationEnabled ? pagination : undefined,
     },
     manualPagination: isPaginationEnabled,
     manualSorting: true,
     getCoreRowModel: getCoreRowModel(),
     onPaginationChange: isPaginationEnabled ? setPagination : undefined,
-    onSortingChange: isDataSortable ? setSorting : undefined
-  })
+    onSortingChange: isDataSortable ? setSorting : undefined,
+  });
   const dndSensors = useSensors(
     useSensor(PointerSensor),
     useSensor(MouseSensor),
     useSensor(TouchSensor),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
-  )
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  );
   useEffect(() => {
     if (isPaginationEnabled && !(Number.isInteger(pageSize) && Number.isInteger(totalPage))) {
-      throw new Error('`pageSize` and `totalPage` should be required if pagination enabled')
+      throw new Error('`pageSize` and `totalPage` should be required if pagination enabled');
     }
-  }, [isPaginationEnabled, pageSize, totalPage])
+  }, [isPaginationEnabled, pageSize, totalPage]);
   useEffect(() => {
-    const sortingState = sorting?.[0]
+    const sortingState = sorting?.[0];
     if (onDataSortingChange && sortingState) {
-      onDataSortingChange(sortingState.id, sortingState.desc ? 'desc' : 'asc')
+      onDataSortingChange(sortingState.id, sortingState.desc ? 'desc' : 'asc');
     }
-  }, [onDataSortingChange, sorting])
+  }, [onDataSortingChange, sorting]);
   useEffect(() => {
     if (onPaginationChange) {
-      onPaginationChange(pagination.pageIndex + 1, pagination.pageSize)
+      onPaginationChange(pagination.pageIndex + 1, pagination.pageSize);
     }
-  }, [onPaginationChange, pagination])
+  }, [onPaginationChange, pagination]);
   const handleAntdPaginationChange: PaginationProps['onChange'] = (page, _pageSize) => {
-    table.setPageIndex(page - 1)
-    table.setPageSize(_pageSize)
-  }
+    table.setPageIndex(page - 1);
+    table.setPageSize(_pageSize);
+  };
   const getCurrentNewIndex = ({ active, over }: DragEndEvent) => {
-    const currentIndex = (active as DragEndEvent['active']).data.current?.sortable.index
-    const newIndex = (over as DragEndEvent['over'])?.data.current?.sortable.index
+    const currentIndex = (active as DragEndEvent['active']).data.current?.sortable.index;
+    const newIndex = (over as DragEndEvent['over'])?.data.current?.sortable.index;
     return {
       currentIndex,
-      newIndex
-    }
-  }
+      newIndex,
+    };
+  };
   const handleRowSortingChange: DndContextProps['onDragEnd'] = (event) => {
-    const { currentIndex, newIndex } = getCurrentNewIndex(event)
+    const { currentIndex, newIndex } = getCurrentNewIndex(event);
     if (onRowSortingChange) {
-      onRowSortingChange(currentIndex, newIndex, event)
+      onRowSortingChange(currentIndex, newIndex, event);
     }
-  }
+  };
   const handleColumnSortingChange: DndContextProps['onDragEnd'] = (event) => {
-    const { currentIndex, newIndex } = getCurrentNewIndex(event)
+    const { currentIndex, newIndex } = getCurrentNewIndex(event);
     if (onColumnSortingChange) {
-      onColumnSortingChange(currentIndex, newIndex, event)
+      onColumnSortingChange(currentIndex, newIndex, event);
     }
-  }
+  };
   return (
     <StyledTableWrapper ref={ref} customStyle={wrapperStyle} className={className}>
       <StyledTable
         className="j-table"
         customStyle={{
           ...tableStyle,
-          width: isColumnResizeable ? table.getCenterTotalSize() : tableStyle?.width
+          width: isColumnResizeable ? table.getCenterTotalSize() : tableStyle?.width,
         }}
       >
         {isHeaderVisible ? (
@@ -453,7 +453,7 @@ const TableInner = <DataModel,>(
                   modifiers={[
                     restrictToFirstScrollableAncestor,
                     restrictToHorizontalAxis,
-                    restrictToParentElement
+                    restrictToParentElement,
                   ]}
                   onDragEnd={handleColumnSortingChange}
                 >
@@ -486,7 +486,7 @@ const TableInner = <DataModel,>(
             modifiers={[
               restrictToFirstScrollableAncestor,
               restrictToVerticalAxis,
-              restrictToParentElement
+              restrictToParentElement,
             ]}
             onDragEnd={handleRowSortingChange}
           >
@@ -556,9 +556,9 @@ const TableInner = <DataModel,>(
         </StyledPaginationWrapper>
       ) : undefined}
     </StyledTableWrapper>
-  )
-}
+  );
+};
 
 export const Table = React.forwardRef(TableInner) as <DataModel>(
-  props: TableProps<DataModel> & { ref?: React.ForwardedRef<HTMLDivElement> }
-) => ReturnType<typeof TableInner>
+  props: TableProps<DataModel> & { ref?: React.ForwardedRef<HTMLDivElement> },
+) => ReturnType<typeof TableInner>;

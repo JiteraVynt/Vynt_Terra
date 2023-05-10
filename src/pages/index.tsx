@@ -1,32 +1,30 @@
-import type { NextPageContext } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { dehydrate } from "react-query";
-import { initServerInfo } from "@utils/serverSide";
-import HomePage from "@components/pages/Home";
-
+import type { NextPageContext } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { dehydrate } from 'react-query';
+import { initServerInfo } from '@utils/serverSide';
+import HomePage from '@components/pages/Home';
 
 export async function getStaticProps(context: NextPageContext) {
-  const { locale = "en", query } = context;
+  const { locale = 'en', query } = context;
   const options: {
     props?: Record<string, unknown>;
     redirect?: Record<string, unknown>;
   } = {};
-  const {  queryClient } = await initServerInfo(context, { session: false });  
+  const { queryClient } = await initServerInfo(context, { session: false });
 
-    return {
+  return {
     ...options,
     props: {
       query: query || null,
-            dehydratedState: dehydrate(queryClient),
+      dehydratedState: dehydrate(queryClient),
       seo: {
-        title: "Terra Sun",
-        description: "",
+        title: 'Terra Sun',
+        description: '',
       },
       ...(await serverSideTranslations(locale)),
-      ...(options.props || {})
+      ...(options.props || {}),
     },
   };
 }
-
 
 export default HomePage;

@@ -1,5 +1,5 @@
 import React from 'react';
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
 import { IconBaseProps, IconType } from 'react-icons/lib';
 
 export enum IconSet {
@@ -14,36 +14,36 @@ export enum IconSet {
 export function getIconComponent(iconName: string, props: IconBaseProps = {}) {
   if (iconName.startsWith('Md')) {
     const Icon = dynamic(async () => {
-      const result = await import('react-icons/md')
+      const result = await import('react-icons/md');
       return result[iconName as keyof typeof result] as IconType;
-    })
-    return <Icon {...props} />
+    });
+    return <Icon {...props} />;
   } else if (iconName.startsWith('Fa')) {
     const Icon = dynamic(async () => {
-      const result = await import('react-icons/fa')
+      const result = await import('react-icons/fa');
       return result[iconName as keyof typeof result] as IconType;
-    })
-    return <Icon {...props} />
+    });
+    return <Icon {...props} />;
   } else if (iconName.startsWith('Bs')) {
     const Icon = dynamic(async () => {
-      const result = await import('react-icons/bs')
+      const result = await import('react-icons/bs');
       return result[iconName as keyof typeof result] as IconType;
-    })
-    return <Icon {...props} />
+    });
+    return <Icon {...props} />;
   } else if (iconName.startsWith('Fi')) {
     const Icon = dynamic(async () => {
-      const result = await import('react-icons/fi')
+      const result = await import('react-icons/fi');
       return result[iconName as keyof typeof result] as IconType;
-    })
-    return <Icon {...props} />
+    });
+    return <Icon {...props} />;
   } else if (iconName.startsWith('Ai')) {
     const Icon = dynamic(async () => {
-      const result = await import('react-icons/ai')
+      const result = await import('react-icons/ai');
       return result[iconName as keyof typeof result] as IconType;
-    })
-    return <Icon {...props} />
+    });
+    return <Icon {...props} />;
   }
-  return null
+  return null;
 }
 
 export function assertUnreachable(value: never): never {
