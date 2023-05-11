@@ -1,4 +1,3 @@
-import DashboardButton from '@components/molecules/DashboardButton';
 import {
   FilterTerrariumResponseBody,
   useFilterTerrariumQuery,
@@ -6,14 +5,13 @@ import {
 } from '@services/terrarium';
 import React, { useMemo, useState } from 'react';
 import { TableColumnDefinition, Table } from '@components/atoms/Table';
+import DashboardButton from '@components/molecules/DashboardButton';
 import DashboardNavbar from '@components/molecules/DashboardNavbar';
 import { Row } from '@components/atoms/Row';
 import { Col } from '@components/atoms/Col';
 import DashboardSidebar from '@components/molecules/DashboardSidebar';
 import { Text } from '@components/atoms/Text';
 import DashboardFooter from '@components/molecules/DashboardFooter';
-import { Modal } from '@components/atoms/Modal';
-import { useNavigateService } from '@services/navigate';
 import { DefaultPageProps } from '@interfaces/page';
 
 import styles from './index.module.css';
@@ -27,38 +25,39 @@ function DashboardTerrariums(props: DashboardTerrariumsProps): JSX.Element {
     Partial<FilterTerrariumRequestBody>
   >({});
   const filterTerrariumQuery = useFilterTerrariumQuery(filterTerrariumParams);
-  const actionsTable1 = useMemo<
+  const columnsTable2 = useMemo<
+    TableColumnDefinition<FilterTerrariumResponseBody['terrariums'][number]>[]
+  >(
+    () => [
+      { name: 'Id', path: 'id', sortable: false },
+      { name: 'Created At', path: 'created_at', sortable: false },
+      { name: 'Updated At', path: 'updated_at', sortable: false },
+      { name: 'Name', path: 'name', sortable: false },
+      { name: 'Price', path: 'price', sortable: false },
+      { name: 'Discription', path: 'discription', sortable: false },
+    ],
+    [],
+  );
+  const actionsTable2 = useMemo<
     TableColumnDefinition<FilterTerrariumResponseBody['terrariums'][number]>[]
   >(
     () => [
       {
         name: 'Delete',
         renderColumn: (innerProps) => (
-          <DashboardButton
-            label={'Delete'}
-            onClick={handleOnClickTable1Delete}
-            {...innerProps.row.original}
-          />
+          <DashboardButton label={'Delete'} {...innerProps.row.original} />
         ),
       },
       {
         name: 'Edit',
         renderColumn: (innerProps) => (
-          <DashboardButton
-            label={'Edit'}
-            onClick={handleOnClickTable1Edit}
-            {...innerProps.row.original}
-          />
+          <DashboardButton label={'Edit'} {...innerProps.row.original} />
         ),
       },
     ],
     [],
   );
 
-  const handleOnClickTable1Delete = () => {
-    Modal.show(<div />);
-  };
-  const handleOnClickTable1Edit = () => {};
   return (
     <div className={styles.page_container}>
       <DashboardNavbar className={styles.dashboardnavbar_1} />
@@ -81,12 +80,11 @@ function DashboardTerrariums(props: DashboardTerrariumsProps): JSX.Element {
                       data={filterTerrariumQuery.data?.terraria}
                       isHeaderVisible
                       isFooterVisible={false}
-                      isPaginationEnabled={false}
-                      className={styles.table_1}
-                      columns={[]}
-                      actions={actionsTable1}
+                      isDataSortable={false}
+                      className={styles.table_2}
+                      columns={columnsTable2}
+                      actions={actionsTable2}
                       wrapperStyle={{
-                        width: '100%',
                         backgroundColor: 'rgb(255, 255, 255)',
                         color: 'rgb(0, 0, 0)',
                         overflowX: 'auto',
@@ -94,7 +92,6 @@ function DashboardTerrariums(props: DashboardTerrariumsProps): JSX.Element {
                       tableStyle={{
                         backgroundColor: 'rgb(255, 255, 255)',
                         color: 'rgb(0, 0, 0)',
-                        width: '100%',
                         border: '1px solid rgb(0, 0, 0)',
                       }}
                       headerColumnStyle={{
