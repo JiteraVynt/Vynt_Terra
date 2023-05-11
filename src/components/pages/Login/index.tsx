@@ -7,8 +7,6 @@ import { Text } from '@components/atoms/Text';
 import { ControlledInput } from '@components/atoms/ControlledInput';
 import { Button } from '@components/atoms/Button';
 import DefaultFooter from '@components/molecules/DefaultFooter';
-import { useLoginWithEmailMutation } from '@services/authentication';
-import { useNavigateService } from '@services/navigate';
 import { DefaultPageProps } from '@interfaces/page';
 
 import styles from './index.module.css';
@@ -21,20 +19,9 @@ interface Form1FormData {
   input_password: string;
 }
 function Login(props: LoginProps): JSX.Element {
-  const loginWithEmailMutation = useLoginWithEmailMutation();
-  const navigation = useNavigateService();
   const formForm1 = useForm1();
 
-  const handleForm1Button = async (values: Form1FormData) => {
-    try {
-      await loginWithEmailMutation.mutateAsync({
-        table: 'users',
-        email: values.input_email,
-        password: values.input_password,
-      });
-      navigation.navigate('/');
-    } catch (error: unknown) {}
-  };
+  const handleForm1Button = (values: Form1FormData) => {};
   return (
     <div className={styles.page_container}>
       <DefaultHeader className={styles.defaultheader_1} />
