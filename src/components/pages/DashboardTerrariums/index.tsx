@@ -81,6 +81,7 @@ function DashboardTerrariums(props: DashboardTerrariumsProps): JSX.Element {
                       data={filterTerrariumQuery.data?.terraria}
                       isHeaderVisible
                       isFooterVisible={false}
+                      isPaginationEnabled={false}
                       className={styles.table_1}
                       columns={[]}
                       actions={actionsTable1}
@@ -97,8 +98,8 @@ function DashboardTerrariums(props: DashboardTerrariumsProps): JSX.Element {
                         border: '1px solid rgb(0, 0, 0)',
                       }}
                       headerColumnStyle={{
-                        backgroundColor: 'rgb(0, 21, 41)',
-                        color: 'rgb(255, 255, 255)',
+                        backgroundColor: 'rgb(255, 255, 255)',
+                        color: 'rgb(0, 0, 0)',
                         fontSize: '16px',
                         textAlign: 'center',
                         fontWeight: 'bold',
