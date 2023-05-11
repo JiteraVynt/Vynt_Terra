@@ -21,16 +21,16 @@ type DashboardUsersProps = DefaultPageProps & {
 function DashboardUsers(props: DashboardUsersProps): JSX.Element {
   const [filterUserParams, setFilterUserParams] = useState<Partial<FilterUserRequestBody>>({});
   const filterUserQuery = useFilterUserQuery(filterUserParams);
-  const columnsTable1 = useMemo<TableColumnDefinition<unknown>[]>(
+  const columnsTable1 = useMemo<TableColumnDefinition<FilterUserResponseBody['users'][number]>[]>(
     () => [
-      { name: 'Id', path: 'undefined', sortable: false },
-      { name: 'Created At', path: 'undefined', sortable: false },
-      { name: 'Updated At', path: 'undefined', sortable: false },
-      { name: 'Email', path: 'undefined', sortable: false },
+      { name: 'Id', path: 'id', sortable: false },
+      { name: 'Created At', path: 'created_at', sortable: false },
+      { name: 'Updated At', path: 'updated_at', sortable: false },
+      { name: 'Email', path: 'email', sortable: false },
     ],
     [],
   );
-  const actionsTable1 = useMemo<TableColumnDefinition<unknown>[]>(
+  const actionsTable1 = useMemo<TableColumnDefinition<FilterUserResponseBody['users'][number]>[]>(
     () => [
       {
         name: 'Delete',
@@ -79,7 +79,7 @@ function DashboardUsers(props: DashboardUsersProps): JSX.Element {
                 <div className={styles.dashboard_content_filter_table}>
                   <div className={styles.box_8}>
                     <Table
-                      data={filterUserQuery.data?.user}
+                      data={filterUserQuery.data?.users}
                       isHeaderVisible
                       isFooterVisible={false}
                       isDataSortable={false}

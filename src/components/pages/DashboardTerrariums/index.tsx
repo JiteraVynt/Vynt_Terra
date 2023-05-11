@@ -77,7 +77,7 @@ function DashboardTerrariums(props: DashboardTerrariumsProps): JSX.Element {
                 <div className={styles.dashboard_content_filter_table}>
                   <div className={styles.box_8}>
                     <Table
-                      data={filterTerrariumQuery.data?.terraria}
+                      data={filterTerrariumQuery.data?.terrariums}
                       isHeaderVisible
                       isFooterVisible={false}
                       isDataSortable={false}
