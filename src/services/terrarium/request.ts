@@ -15,6 +15,8 @@ export type FilterTerrariumRequestBody = {
   pagination_limit?: number;
   terraria: {
     name?: string;
+    price?: number;
+    discription?: string;
   };
 };
 
@@ -62,6 +64,8 @@ export const showTerrariumApi = async (
 export type CreateTerrariumRequestBody = {
   terraria: {
     name?: string;
+    price?: number;
+    discription?: string;
   };
 };
 
@@ -84,6 +88,8 @@ export type UpdateTerrariumRequestBody = {
   id: string;
   terraria: {
     name?: string;
+    price?: number;
+    discription?: string;
   };
 };
 

@@ -3,4 +3,6 @@ export type TerrariumModel = {
   created_at: Date;
   updated_at: Date;
   name: string;
+  price: number;
+  discription: string;
 };
