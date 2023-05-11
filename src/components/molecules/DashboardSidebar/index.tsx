@@ -12,10 +12,10 @@ type DashboardSidebarProps = DefaultPageProps & {
 function DashboardSidebar(props: DashboardSidebarProps): JSX.Element {
   const navigation = useNavigateService();
 
-  const handleOnClick = () => {
+  const handleOnClickTerrariums = () => {
     navigation.navigate('/dashboard/terrariums');
   };
-  const handleOnClick = () => {
+  const handleOnClickUsers = () => {
     navigation.navigate('/dashboard/users');
   };
   return (
@@ -23,14 +23,14 @@ function DashboardSidebar(props: DashboardSidebarProps): JSX.Element {
       <div className={styles.box_2}>
         <DashboardMenuItem
           className={styles.dashboardmenuitem_1}
-          onClick={handleOnClick}
+          onClick={handleOnClickTerrariums}
           label={'Terrariums'}
         />
       </div>
       <div className={styles.box_2}>
         <DashboardMenuItem
           className={styles.dashboardmenuitem_1}
-          onClick={handleOnClick}
+          onClick={handleOnClickUsers}
           label={'Users'}
         />
       </div>
