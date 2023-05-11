@@ -15,12 +15,12 @@ class AuthenticationSessionStorage {
 
   initial() {
     if (this.processInstance) {
-      return this.processInstance
+      return this.processInstance;
     }
     this.processInstance = new Promise((resolve) => {
       this.processResolve = resolve;
     });
-    return this.processInstance
+    return this.processInstance;
   }
 
   private endProcessed() {

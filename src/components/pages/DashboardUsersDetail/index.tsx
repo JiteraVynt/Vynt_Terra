@@ -9,11 +9,11 @@ import { DefaultPageProps } from '@interfaces/page';
 
 import styles from './index.module.css';
 
-type DashboardTerrariumsDetailProps = DefaultPageProps & {
+type DashboardUsersDetailProps = DefaultPageProps & {
   className?: string;
 };
 
-function DashboardTerrariumsDetail(props: DashboardTerrariumsDetailProps): JSX.Element {
+function DashboardUsersDetail(props: DashboardUsersDetailProps): JSX.Element {
   return (
     <div className={styles.page_container}>
       <DashboardNavbar className={styles.dashboardnavbar_1} />
@@ -27,7 +27,7 @@ function DashboardTerrariumsDetail(props: DashboardTerrariumsDetailProps): JSX.E
               <div className={styles.dashboard_content}>
                 <div className={styles.dashboard_content_title}>
                   <Text textType="Text" className={styles.text_9}>
-                    {'Terrariums Detail'}
+                    {'Users Detail'}
                   </Text>
                 </div>
                 <div className={styles.dashboard_content_filter_table} />
@@ -41,4 +41,4 @@ function DashboardTerrariumsDetail(props: DashboardTerrariumsDetailProps): JSX.E
   );
 }
 
-export default DashboardTerrariumsDetail;
+export default DashboardUsersDetail;

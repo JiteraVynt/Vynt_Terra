@@ -1,31 +1,31 @@
-import React, { useState } from 'react'
-import { Drawer, DrawerProps } from 'antd'
+import React, { useState } from 'react';
+import { Drawer, DrawerProps } from 'antd';
 
-import { Button, ButtonProps } from '@components/atoms/Button'
-import { Icon, IconProps } from '@components/atoms/Icon'
+import { Button, ButtonProps } from '@components/atoms/Button';
+import { Icon, IconProps } from '@components/atoms/Icon';
 
 export enum HamburgerDrawerPlacementEnum {
   TOP = 'top',
   RIGHT = 'right',
   BOTTOM = 'bottom',
-  LEFT = 'left'
+  LEFT = 'left',
 }
 
 export interface HamburgerDrawerProps
   extends Omit<DrawerProps, 'headerStyle' | 'bodyStyle' | 'footerStyle' | 'title'> {
-  headerVisible?: boolean
+  headerVisible?: boolean;
 }
 
 export interface HamburgerMenuProps {
-  className?: string
-  drawerTitle?: string
-  buttonProps?: Omit<ButtonProps, 'style'>
-  buttonStyle?: ButtonProps['style']
-  drawerProps?: HamburgerDrawerProps
-  headerStyle?: DrawerProps['headerStyle']
-  bodyStyle?: DrawerProps['bodyStyle']
-  iconProps?: IconProps
-  children?: React.ReactNode
+  className?: string;
+  drawerTitle?: string;
+  buttonProps?: Omit<ButtonProps, 'style'>;
+  buttonStyle?: ButtonProps['style'];
+  drawerProps?: HamburgerDrawerProps;
+  headerStyle?: DrawerProps['headerStyle'];
+  bodyStyle?: DrawerProps['bodyStyle'];
+  iconProps?: IconProps;
+  children?: React.ReactNode;
 }
 
 const HamburgerMenu = (props: HamburgerMenuProps) => {
@@ -38,26 +38,26 @@ const HamburgerMenu = (props: HamburgerMenuProps) => {
     bodyStyle,
     iconProps,
     children,
-    className
-  } = props
-  const [drawerVisible, setDrawerVisible] = useState(false)
+    className,
+  } = props;
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const { headerVisible, closable, ...restDrawerProps } = (drawerProps ||
-    {}) as HamburgerDrawerProps
+    {}) as HamburgerDrawerProps;
 
   const handleButtonClick = () => {
-    setDrawerVisible(true)
-  }
+    setDrawerVisible(true);
+  };
 
   const handleDrawerClose = () => {
-    setDrawerVisible(false)
-  }
+    setDrawerVisible(false);
+  };
 
   const defaultDrawerProps: DrawerProps = !headerVisible
     ? { title: undefined, closable: false }
-    : { title: drawerTitle, closable }
+    : { title: drawerTitle, closable };
 
   return (
-    <div className={className} style={{ width: 'fit-content' }} >
+    <div className={className} style={{ width: 'fit-content' }}>
       <Button onClick={handleButtonClick} style={buttonStyle} {...buttonProps}>
         <Icon iconName="MdMenu" {...iconProps} />
       </Button>
@@ -72,7 +72,7 @@ const HamburgerMenu = (props: HamburgerMenuProps) => {
         {children}
       </Drawer>
     </div>
-  )
-}
+  );
+};
 
-export { HamburgerMenu }
+export { HamburgerMenu };

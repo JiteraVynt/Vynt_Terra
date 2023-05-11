@@ -1,26 +1,25 @@
-
-import axios from "axios";
-import { request } from "@utils/request";
-import { getRoute } from '@utils/route'
-import { NextApiRequest, NextApiResponse } from "next";
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import axios from 'axios';
+import { request } from '@utils/request';
+import { getRoute } from '@utils/route';
+import { NextApiRequest, NextApiResponse } from 'next';
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import {
   INVALID_RESPONSE_ERROR,
   REFRESH_TOKEN_REJECTED_ERROR,
   REJECTED_AUTHENTICATION_ERROR,
-} from "@constants/error";
+} from '@constants/error';
 
-function prepareHeaders(headers?: Record<string, any>) {
+function prepareHeaders(headers?: Record<string, string>) {
   if (!headers) {
-    return
+    return;
   }
   return {
     cookie: headers.cookie,
     'accept-encoding': headers['accept-encoding'],
     'accept-language': headers['accept-language'],
     'user-agent': headers['user-agent'],
-  }
+  };
 }
 
 const AUTHENTICATION_METHODS = {
@@ -29,37 +28,36 @@ const AUTHENTICATION_METHODS = {
     credentials: {
       table: { type: 'text' },
       token: { type: 'text' },
-      token_type_hint: { type: 'text' }
+      token_type_hint: { type: 'text' },
     },
-    endpoint: '/oauth/revoke'
+    endpoint: '/oauth/revoke',
   },
-      CONFIRMATION_TOKEN: {
+  CONFIRMATION_TOKEN: {
     key: 'confirmationToken',
     credentials: {
       confirmation_token: { type: 'text' },
       table: { type: 'text' },
     },
-    endpoint: "/api/:table\\_verify_confirmation_token",
+    endpoint: '/api/:table\\_verify_confirmation_token',
   },
   EMAIL: {
-    key: "emailLogin",
+    key: 'emailLogin',
     credentials: {
-      table: { type: "text" },
-      email: { type: "text" },
-      password: { type: "password" },
+      table: { type: 'text' },
+      email: { type: 'text' },
+      password: { type: 'password' },
     },
-    endpoint: "/oauth/token",
+    endpoint: '/oauth/token',
   },
-    };
+};
 
 const handleRefreshToken = async (refreshToken: string, scope: string) => {
   try {
     const res: any = await request({
       url: AUTHENTICATION_METHODS.EMAIL.endpoint,
-      method: "POST",
-      headers,
+      method: 'POST',
       data: {
-        grant_type: "refresh_token",
+        grant_type: 'refresh_token',
         refresh_token: refreshToken,
         client_id: `${process.env.APP_CLIENT_ID}`,
         client_secret: `${process.env.APP_CLIENT_SECRET}`,
@@ -97,10 +95,10 @@ const handleRefreshToken = async (refreshToken: string, scope: string) => {
 
 const prepareAuthenticationFormData = (table: string) => {
   const data = new URLSearchParams();
-  data.append("grant_type", "password");
-  data.append("client_id", `${process.env.APP_CLIENT_ID}`);
-  data.append("client_secret", `${process.env.APP_CLIENT_SECRET}`);
-  data.append("scope", table);
+  data.append('grant_type', 'password');
+  data.append('client_id', `${process.env.APP_CLIENT_ID}`);
+  data.append('client_secret', `${process.env.APP_CLIENT_SECRET}`);
+  data.append('scope', table);
 
   return data;
 };
@@ -130,56 +128,58 @@ const parseAuthenticationInfo = (res: AuthenticationResponse) => {
 };
 
 const providers = [
-    CredentialsProvider({
+  CredentialsProvider({
     id: AUTHENTICATION_METHODS.CONFIRMATION_TOKEN.key,
     credentials: AUTHENTICATION_METHODS.CONFIRMATION_TOKEN.credentials,
     authorize: async (credentials, req) => {
       if (!credentials) {
-        throw new Error('Missing params')
+        throw new Error('Missing params');
       }
       try {
         const url = getRoute(AUTHENTICATION_METHODS.CONFIRMATION_TOKEN.endpoint, {
-          table: credentials.table
-        })
+          table: credentials.table,
+        });
         const res = await request({
           url,
           method: 'POST',
           headers: prepareHeaders(req?.headers),
           data: {
-            confirmation_token: credentials.confirmation_token
-          }
-        })
+            confirmation_token: credentials.confirmation_token,
+          },
+        });
         if (res.data?.access_token) {
-          return parseAuthenticationInfo(res.data)
+          return parseAuthenticationInfo(res.data);
         }
+        throw new Error(INVALID_RESPONSE_ERROR);
       } catch (e) {
-        throw new Error(e.response?.data?.message || 'Invalid response')
+        throw e;
       }
-    }
+    },
   }),
   CredentialsProvider({
     id: AUTHENTICATION_METHODS.EMAIL.key,
     credentials: AUTHENTICATION_METHODS.EMAIL.credentials,
     authorize: async (credentials, req) => {
       if (!credentials) {
-        throw new Error("Missing params");
+        throw new Error('Missing params');
       }
       try {
         const data = prepareAuthenticationFormData(credentials.table);
-        data.append("password", credentials.password);
-        data.append("email", credentials.email);
+        data.append('password', credentials.password);
+        data.append('email', credentials.email);
 
         const res = await request({
           url: AUTHENTICATION_METHODS.EMAIL.endpoint,
-          method: "POST",
+          method: 'POST',
           headers: prepareHeaders(req?.headers),
           data,
         });
         if (res.data?.access_token) {
           return parseAuthenticationInfo(res.data);
         }
+        throw new Error(INVALID_RESPONSE_ERROR);
       } catch (e) {
-        throw new Error(e.response?.data?.message || 'Invalid response')
+        throw e;
       }
     },
   }),
@@ -188,38 +188,64 @@ const providers = [
     credentials: AUTHENTICATION_METHODS.REVOKE_TOKEN.credentials,
     authorize: async (credentials, req) => {
       if (!credentials) {
-        throw new Error('Missing params')
+        throw new Error('Missing params');
       }
       try {
-        const data = new URLSearchParams()
-        data.append('token', credentials.token)
+        const data = new URLSearchParams();
+        data.append('token', credentials.token);
         if (credentials.token_type_hint) {
-          data.append('token_type_hint', credentials.token_type_hint)
+          data.append('token_type_hint', credentials.token_type_hint);
         }
 
-        request({
+        await request({
           url: AUTHENTICATION_METHODS.REVOKE_TOKEN.endpoint,
           method: 'POST',
           headers: {
             ...prepareHeaders(req?.headers),
             Authorization: `Basic ${Buffer.from(
-              `${process.env.APP_CLIENT_ID}:${process.env.APP_CLIENT_ID}`
-            ).toString('base64')}`
+              `${process.env.APP_CLIENT_ID}:${process.env.APP_CLIENT_ID}`,
+            ).toString('base64')}`,
           },
-          data
-        })
-      } catch (e) {}
-    }
+          data,
+        });
+      } finally {
+        return {
+          id: '',
+          authenticatedOwner: '',
+          authenticatedId: 1,
+          accessToken: '',
+        };
+      }
+    },
   }),
-      ];
+  CredentialsProvider({
+    id: 'testVerify',
+    authorize: async () => {
+      if (process.env.NODE_ENV !== 'development') {
+        throw new Error(REJECTED_AUTHENTICATION_ERROR);
+      }
+      return {
+        id: '1',
+        authenticatedOwner: 'User',
+        authenticatedId: 1,
+        accessToken: '__THIS_IS_TOKEN__',
+        refreshToken: '__THIS_IS_REFRESH_TOKEN__',
+        expiresIn: 200,
+        tokenType: 'Bearer',
+        createdAt: Date.now() / 1000,
+      };
+    },
+    credentials: { phone: { type: 'text' } },
+  }),
+];
 
 const options = {
   pages: {
-    signIn: "/",
-    signOut: "/",
-    error: "/",
-    verifyRequest: "/",
-    newUser: "/",
+    signIn: '/',
+    signOut: '/',
+    error: '/',
+    verifyRequest: '/',
+    newUser: '/',
   },
   providers,
   callbacks: {
@@ -258,10 +284,8 @@ const options = {
       // NOTICE: Currently we refresh token everytime user load the new page
       if (
         !token.refreshToken ||
-        (
-          Date.now() / 1000 + +(process.env.NEXT_PUBLIC_ACCESS_TOKEN_THRESHOLD || 0) <
+        Date.now() / 1000 + +(process.env.NEXT_PUBLIC_ACCESS_TOKEN_THRESHOLD || 0) <
           token.accessTokenExpireAt
-        )
       ) {
         return token;
       }
@@ -278,7 +302,7 @@ const options = {
         tokenType: result.tokenType,
         expiresIn: result.expiresIn,
         accessToken: result.accessToken,
-        refreshToken: result.refreshToken || "",
+        refreshToken: result.refreshToken || '',
         accessTokenExpireAt: result.expiresIn + result.createdAt,
         scope: result.scope,
       };
@@ -286,5 +310,4 @@ const options = {
   },
 };
 
-export default (req: NextApiRequest, res: NextApiResponse) =>
-  NextAuth(req, res, options);
+export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, options);

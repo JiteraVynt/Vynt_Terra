@@ -2,7 +2,8 @@ import type { NextPageContext } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { dehydrate } from 'react-query';
 import { initServerInfo, errorHandler } from '@utils/serverSide';
-import DashboardTerrariumsDetailPage from '@components/pages/DashboardTerrariumsDetail';
+import { fetchFilterUser } from '@services/user';
+import DashboardUsersPage from '@components/pages/DashboardUsers';
 
 export async function getServerSideProps(context: NextPageContext) {
   const { locale = 'en', query } = context;
@@ -22,6 +23,7 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 
   try {
+    await fetchFilterUser(queryClient, {});
   } catch (error: unknown) {
     return errorHandler(error);
   }
@@ -41,4 +43,4 @@ export async function getServerSideProps(context: NextPageContext) {
   };
 }
 
-export default DashboardTerrariumsDetailPage;
+export default DashboardUsersPage;

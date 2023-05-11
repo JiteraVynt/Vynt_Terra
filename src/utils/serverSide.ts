@@ -2,7 +2,7 @@ import type { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 import { QueryClient } from 'react-query';
 import authenticationSession from '@utils/authenticationSession';
-import { AxiosError } from 'axios'
+import { AxiosError } from 'axios';
 
 export async function initServerInfo(
   context: NextPageContext,
@@ -19,7 +19,7 @@ export async function initServerInfo(
 
 export function errorHandler(error: unknown) {
   // Display 404 page if the error is 404
-  const errorStatus = (error as AxiosError)?.response?.status
+  const errorStatus = (error as AxiosError)?.response?.status;
   const handleErrors = {
     404: { notFound: true },
     401: {
@@ -28,10 +28,10 @@ export function errorHandler(error: unknown) {
         permanent: false,
       },
     },
-  }
+  };
   if (errorStatus && handleErrors[errorStatus]) {
-    return handleErrors[errorStatus]
+    return handleErrors[errorStatus];
   }
   // Display 500 page for other errors in production mode
-  throw error
+  throw error;
 }

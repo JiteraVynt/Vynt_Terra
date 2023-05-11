@@ -1,15 +1,15 @@
-import React from 'react'
-import { Modal as AntModal, ModalProps as AntModalProps } from 'antd'
+import React from 'react';
+import { Modal as AntModal, ModalProps as AntModalProps } from 'antd';
 
-let instanceModalComponent: ModalComponent | null = null
+let instanceModalComponent: ModalComponent | null = null;
 const DEFAULT_STATES = {
-  modals: []
-}
+  modals: [],
+};
 
 export enum ModalPositionEnum {
   DEFAULT = 'default',
   TOP = 'top',
-  CENTER = 'center'
+  CENTER = 'center',
 }
 export interface ModalOptions
   extends Omit<
@@ -28,81 +28,81 @@ export interface ModalOptions
     | 'closeIcon'
     | 'bodyStyle'
   > {
-  position?: `${ModalPositionEnum}`
+  position?: `${ModalPositionEnum}`;
 }
 export type ModalProps = {
-  local?: boolean
-}
+  local?: boolean;
+};
 type ModalState = {
-  modals: { options: ModalOptions; component: React.ReactNode; visible: boolean; id: string }[]
-}
+  modals: { options: ModalOptions; component: React.ReactNode; visible: boolean; id: string }[];
+};
 
 export class ModalComponent extends React.PureComponent<ModalProps, ModalState> {
   constructor(props: ModalProps) {
-    super(props)
-    this.state = DEFAULT_STATES
+    super(props);
+    this.state = DEFAULT_STATES;
   }
 
   componentDidMount() {
     // eslint-disable-next-line unicorn/no-this-assignment
-    instanceModalComponent = this
+    instanceModalComponent = this;
   }
 
   componentWillUnmount() {
-    instanceModalComponent = null
+    instanceModalComponent = null;
   }
 
   clearModal = (hideId?: string) => {
     if (!hideId) {
-      return
+      return;
     }
 
     this.setState((state) => {
       const modals = state.modals.filter((modal) => {
         if (modal.id === hideId && typeof modal.options?.afterClose === 'function') {
-          modal.options?.afterClose()
+          modal.options?.afterClose();
         }
-        return modal.id !== hideId
-      })
+        return modal.id !== hideId;
+      });
       return {
         ...state,
-        modals
-      }
-    })
-  }
+        modals,
+      };
+    });
+  };
 
   // eslint-disable-next-line react/no-unused-class-component-methods
   hide = (id?: string) => {
-    const { modals } = this.state
-    let newModals = modals
+    const { modals } = this.state;
+    let newModals = modals;
     if (id) {
       newModals = modals.map((modal) => {
         if (modal.id === id) {
-          return { ...modal, visible: false }
+          return { ...modal, visible: false };
         }
-        return modal
-      })
+        return modal;
+      });
     } else if (modals?.[modals.length - 1]) {
-      modals[modals.length - 1].visible = false
-      newModals = modals
+      modals[modals.length - 1].visible = false;
+      newModals = modals;
     }
     this.setState({
-      modals: [...newModals]
-    })
-  }
+      modals: [...newModals],
+    });
+  };
 
   // eslint-disable-next-line react/no-unused-class-component-methods
   show = (component: React.ReactNode, options: ModalOptions) => {
-    const { modals } = this.state
-    const modalId = `${Date.now()}`
+    const { modals } = this.state;
+    const modalId = `${Date.now()}`;
     this.setState({
-      modals: [...modals, { component, options, visible: true, id: modalId }]
-    })
-    return modalId
-  }
+      modals: [...modals, { component, options, visible: true, id: modalId }],
+    });
+    return modalId;
+  };
 
   render() {
-    const { modals } = this.state
+    const { modals } = this.state;
 
     return (
       <>
@@ -122,22 +122,22 @@ export class ModalComponent extends React.PureComponent<ModalProps, ModalState> 
               style={{
                 pointerEvents: 'auto',
                 top: modal.options.position === ModalPositionEnum.TOP ? '0px' : undefined,
-                ...modal.options.style
+                ...modal.options.style,
               }}
               {...modal.options}
             />
-          )
+          );
         })}
       </>
-    )
+    );
   }
 }
 
 export const Modal = {
   show(component: React.ReactNode, modalOptions: ModalOptions = {}) {
-    return instanceModalComponent?.show(component, modalOptions)
+    return instanceModalComponent?.show(component, modalOptions);
   },
   hide(id?: string) {
-    instanceModalComponent?.hide(id)
-  }
-}
+    instanceModalComponent?.hide(id);
+  },
+};

@@ -1,54 +1,54 @@
-import { useRouter } from 'next/router'
-import { parseParamUrl } from '@utils/navigation'
+import { useRouter } from 'next/router';
+import { parseParamUrl } from '@utils/navigation';
 
 export const useNavigateService = () => {
-  const navigateService = useRouter()
+  const navigateService = useRouter();
 
   return {
     navigate: (url: string, params?: Record<string, string | number | undefined>) => {
       if (navigateService) {
         navigateService.push({
           pathname: parseParamUrl(url, params),
-          query: params
-        })
+          query: params,
+        });
       } else {
-        window.open(parseParamUrl(url, params), '_self')
+        window.open(parseParamUrl(url, params), '_self');
       }
     },
     replace: (url: string, params?: Record<string, string | number | undefined>) => {
       if (navigateService) {
         navigateService.replace({
           pathname: parseParamUrl(url, params),
-          query: params
-        })
+          query: params,
+        });
       } else {
-        window.open(parseParamUrl(url, params), '_self')
+        window.open(parseParamUrl(url, params), '_self');
       }
     },
     goBack: () => {
       if (navigateService) {
-        navigateService.back()
+        navigateService.back();
       } else {
-        history.back()
+        history.back();
       }
     },
     reload: () => {
       if (navigateService) {
-        navigateService.reload()
+        navigateService.reload();
       } else {
-        window.location.reload()
+        window.location.reload();
       }
     },
     openExternalLink: (
       url: string,
       isNewTab?: boolean,
-      params?: Record<string, string | number | undefined>
+      params?: Record<string, string | number | undefined>,
     ) => {
       if (isNewTab) {
-        window.open(parseParamUrl(url, params), '_blank')
+        window.open(parseParamUrl(url, params), '_blank');
       } else {
-        window.open(parseParamUrl(url, params), '_self')
+        window.open(parseParamUrl(url, params), '_self');
       }
-    }
-  }
-}
+    },
+  };
+};
