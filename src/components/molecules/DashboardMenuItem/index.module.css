@@ -1,6 +1,7 @@
 .molecule {
   width: 100%;
   height: auto;
+  cursor: pointer;
 }
 .box_2 {
   background-color: rgba(0, 0, 0, 0);

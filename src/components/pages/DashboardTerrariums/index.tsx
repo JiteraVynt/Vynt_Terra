@@ -13,14 +13,17 @@ import DashboardSidebar from '@components/molecules/DashboardSidebar';
 import { Text } from '@components/atoms/Text';
 import DashboardFooter from '@components/molecules/DashboardFooter';
 import { DefaultPageProps } from '@interfaces/page';
+import { Modal } from '@components/atoms/Modal';
 
 import styles from './index.module.css';
+import { useNavigateService } from '@services/navigate';
 
 type DashboardTerrariumsProps = DefaultPageProps & {
   className?: string;
 };
 
 function DashboardTerrariums(props: DashboardTerrariumsProps): JSX.Element {
+  const navigation = useNavigateService()
   const [filterTerrariumParams, setFilterTerrariumParams] = useState<
     Partial<FilterTerrariumRequestBody>
   >({});
@@ -45,19 +48,33 @@ function DashboardTerrariums(props: DashboardTerrariumsProps): JSX.Element {
       {
         name: 'Delete',
         renderColumn: (innerProps) => (
-          <DashboardButton label={'Delete'} {...innerProps.row.original} />
+          <DashboardButton
+            label={'Delete'}
+            onClick={handleOnClickTable2Delete}
+            {...innerProps.row.original}
+          />
         ),
       },
       {
         name: 'Edit',
         renderColumn: (innerProps) => (
-          <DashboardButton label={'Edit'} {...innerProps.row.original} />
+          <DashboardButton
+            label={'Edit'}
+            onClick={handleOnClickTable2Edit}
+            {...innerProps.row.original}
+          />
         ),
       },
     ],
     [],
   );
 
+  const handleOnClickTable2Delete = () => {
+    Modal.show(<div />);
+  };
+  const handleOnClickTable2Edit = () => {
+    // navigation.navigate('/dashboard/terrariums/');
+  };
   return (
     <div className={styles.page_container}>
       <DashboardNavbar className={styles.dashboardnavbar_1} />
